@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="colin.com.student.mapper.DepartmentTMapper" >
+
+<cache />
+
+
+  <resultMap id="BaseResultMap" type="departmentT" >
+    <id column="department_id" property="id" jdbcType="INTEGER" />
+    <result column="department_name" property="departmentName" jdbcType="CHAR" />
+    <result column="department_director_id" property="departmentDirectorId" jdbcType="CHAR" />
+ 
+  </resultMap>
+  <resultMap type="departmentExt" id="departmentExtMap" extends="BaseResultMap">
+  <collection property="tList" column="department_id" ofType="teacherT" select="colin.com.student.mapper.TeacherTMapper.findTeacherListFindDepartment">
+  		<id column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="teacher_bothdate" property="teacherBothdate" jdbcType="CHAR" />
+		<result column="department_id" property="departmentId" jdbcType="CHAR" />
+		<result column="teacher_sex_id" property="teacherSexId" jdbcType="BIT" />
+		<result column="job_id" property="jobId" jdbcType="CHAR" />
+		<result column="salary" property="salary" jdbcType="INTEGER" />
+		<result column="partydues" property="partydues" jdbcType="TINYINT" />
+		<result column="passwd" property="passwd" jdbcType="CHAR" />
+		<result column="mailbox" property="mailbox" jdbcType="CHAR" />
+  </collection>
+  </resultMap>
+ 
+  <sql id="Base_Column_List" >
+    department_id, department_name, department_director_id
+  </sql>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="int" >
+    select 
+    <include refid="Base_Column_List" />
+    from department_t
+    where department_id = #{id,jdbcType=INTEGER}
+  </select>
+ <select id="selectList" resultMap="departmentExtMap" useCache="true" >
+    select 
+    <include refid="Base_Column_List" />
+    from department_t
+    <where>
+    
+ 
+    </where>
+
+  </select>
+ 
+</mapper>

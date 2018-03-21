@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE configuration
+    PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+
+
+<settings>
+<setting name="lazyLoadingEnabled" value="true"/>
+<setting name="aggressiveLazyLoading" value="false"/>
+<setting name="cacheEnabled" value="true"/>
+</settings>
+
+<typeAliases>
+<package name="com/web/java/user/bean"/>
+<package name="colin/com/student/po"/>
+
+</typeAliases>
+
+<!-- 插件 
+<plugins>
+<plugin interceptor="colin.com.interceptor.MYinterceptor">
+<property name="age" value="25"/>
+</plugin>
+</plugins>-->
+
+<!-- 
+
+	<environments default="development">
+		<environment id="development">
+			<transactionManager type="JDBC">
+			</transactionManager> -->
+
+			<!-- type="数据源的工厂 获得c3p0的数据源" 
+			<dataSource type="com.web.java.dbdao.ColinDataSourceFactory">
+
+			</dataSource>
+		</environment>
+	</environments>-->
+
+	<!--<mappers>
+		<mapper resource="colin/com/map/user.xml" /> 
+		<mapper resource="colin/com/student/mapper/student.xml" />  
+		
+		<mapper class="colin.com.student.mapper.TeacherTMapper"/>
+		<package name="colin/com/student/mapper"/>
+	</mappers>-->
+
+</configuration>

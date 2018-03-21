@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="colin.com.student.mapper.TeacherTMapper">
+	<resultMap id="BaseResultMap" type="teacherT">
+		<id column="teacher_id" property="teacherId" jdbcType="CHAR" />
+		<result column="teacher_name" property="teacherName" jdbcType="CHAR" />
+		<result column="teacher_bothdate" property="teacherBothdate" jdbcType="CHAR" />
+		<result column="department_id" property="departmentId" jdbcType="CHAR" />
+		<result column="teacher_sex_id" property="teacherSexId" jdbcType="BIT" />
+		<result column="job_id" property="jobId" jdbcType="CHAR" />
+		<result column="salary" property="salary" jdbcType="INTEGER" />
+		<result column="partydues" property="partydues" jdbcType="TINYINT" />
+		<result column="passwd" property="passwd" jdbcType="CHAR" />
+		<result column="mailbox" property="mailbox" jdbcType="CHAR" />
+	</resultMap>
+	<resultMap type="teacherExt" id="teacherExtMap" extends="BaseResultMap">
+
+		<association property="departmentT" javaType="departmentT" column="department_id"
+			select="colin.com.student.mapper.DepartmentTMapper.selectByPrimaryKey">
+			<id column="department_id" property="id" jdbcType="INTEGER" />
+			<result column="department_name" property="departmentName" jdbcType="CHAR" />
+			<result column="department_director_id" property="departmentDirectorId" jdbcType="CHAR" />
+		</association>
+
+
+	</resultMap>
+
+	<select id="findTeacherList" parameterType="studentVo" resultMap="BaseResultMap">
+		select teacher_name ,teacher_id from teacher_t
+		, department_t where
+		teacher_t.department_id=department_t.department_id and
+		department_name=#{departmentT.departmentName}
+		and teacher_sex_id=#{teacherT.teacherSexId};
+	</select>
+	<select id="findTeacherDepartmentList" resultMap="teacherExtMap">
+		SELECT * FROM teacher_t
+	</select>
+
+	<select id="findTeacherListFindDepartment" resultMap="BaseResultMap" parameterType="int">
+		SELECT * FROM teacher_t where
+		department_id = #{id,jdbcType=INTEGER}
+	</select>
+	<insert id="insert" parameterType="teacherT">
+		insert into teacher_t (teacher_id, teacher_name, teacher_bothdate,
+		department_id, teacher_sex_id, job_id,
+		salary, partydues, passwd,
+		mailbox)
+		values (#{teacherId,jdbcType=CHAR}, #{teacherName,jdbcType=CHAR}, #{teacherBothdate,jdbcType=CHAR},
+		#{departmentId,jdbcType=CHAR}, #{teacherSexId,jdbcType=BIT}, #{jobId,jdbcType=CHAR},
+		#{salary,jdbcType=INTEGER}, #{partydues,jdbcType=TINYINT}, #{passwd,jdbcType=CHAR},
+		#{mailbox,jdbcType=CHAR})
+	</insert>
+</mapper>
